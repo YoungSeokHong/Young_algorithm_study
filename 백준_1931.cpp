@@ -1,36 +1,39 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
 
-long long arr[100000][2];
-long long tmpt[100000][2];
-long long cnt[100000];
+using namespace std;
+
+bool compare(pair<int, int> a, pair<int, int> b){
+	if(a.second == b.second){
+		return a.first > b.first;
+	}else{
+		return a.second < b.second;
+	}
+}
 
 int main(void){
-    printf("start\n");
-    
-    int cnt = 0;
-    int n;
-    scanf("%d", &n);
-    for(int i=0; i<n; i++){
-        scanf("%d %d", &arr[i][0], &arr[i][1]);
-    }
-
-    for(int i=0; i<n; i++){
-        bool c= false;
-        for(int j=0; j<cnt; j++){
-            if(!(arr[j][0] >= arr[i][1] || arr[j][1] <= arr[i][0])) {
-                print
-                c = true;
-                break;
-            }
-        }
-
-        if(!c) {
-            tmpt[cnt][0] = arr[i][0];
-            tmpt[cnt][1] = arr[i][1];
-            printf("(%d, %d)\n", tmpt[cnt][0], tmpt[cnt][1]);
-            cnt++;
-        }
-    }
-
-    printf("%d", cnt);
+	int n;
+	vector<pair<int, int> > v;
+	scanf("%d", &n);
+	for(int i=0; i<n; i++){
+		int a, b;
+		scanf("%d %d", &a, &b);
+		v.push_back(pair<int, int>(a, b));
+	}
+	
+	sort(v.begin(), v.end(), compare);
+	
+	int cnt = 0;
+	pair<int, int> tmpt = make_pair(0, 0);
+	for(int i=0; i<n; i++){
+		if(v[i].second <= tmpt.first || v[i].first >= tmpt.second){
+			tmpt = pair<int, int>(v[i].first, v[i].second);
+			cnt++;
+		}
+	}
+	
+	printf("%d", cnt);
+	
+	return 0;
 }

@@ -8,62 +8,7 @@ int map[12][12];
 int horseMap[12][12];
 int cnt = 0;
 void direction(int x, int y, int i, int n, bool checked);
-
-void go(int x, int y, int i, int n, bool checked){
-    printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    if(x < 0 || y < 0 || x >= n || y >= n || map[x][y] == 2){
-        if(checked) return;
-        int tmpD;
-        switch (horse[i].top().second){
-        case 1: tmpD = 2;
-        case 2: tmpD = 1;
-        case 3: tmpD = 4;
-        case 4: tmpD = 3;
-        default:
-            horse[i].pop();
-            horse[i].push(pair<pair<int, int>, int>(make_pair(x, y), tmpD));
-            direction(x, y, i, n, true);
-            break;
-        }
-    }else if(map[x][y] == 1){    
-        stack<pair<pair<int, int>, int> > tmp;
-        while(!horse[i].empty()){
-            tmp.push(pair<pair<int, int>, int>(make_pair(x, y), horse[i].top().second));
-            horse[i].pop();
-        }
-        horse[i] = tmp;
-    }else if(map[x][y] == 0){
-        horse[i].pop();
-        horse[i].push(pair<pair<int, int>, int>(make_pair(x, y), horse[i].top().second));
-    }
-}
-
-void direction(int x, int y, int i, int n, bool checked){
-    int tmpX, tmpY;
-    switch (horse[i].top().second)
-    {
-    case 1: tmpX = x + 1; break;
-    case 2: tmpX = x - 1; break;
-    case 3: tmpY = y + 1; break;
-    case 4: tmpY = y - 1; break;
-    default: break;
-    }
-    printf("asdasd\n");
-    go(tmpX, tmpY, i, n, checked);
-    if(horseMap[tmpX][tmpY]){
-        stack<pair<pair<int, int>, int> > tmp;
-        while(!horse[horseMap[tmpX][tmpY]].empty()){
-            printf("top : %d\n", horse[i].top().second);
-            tmp.push(pair<pair<int, int>, int>(make_pair(tmpX, tmpX), horse[horseMap[tmpX][tmpY]].top().second));
-            horse[horseMap[tmpX][tmpY]].pop();
-        }
-        while(!tmp.empty()){
-            horse[i].push(pair<pair<int, int>, int>(make_pair(tmpX, tmpX), tmp.top().second));
-            tmp.pop();
-        }
-    }
-
-}
+void go(int x, int y, int i, int n, bool checked);
 
 int main(void){
     // input
@@ -103,4 +48,60 @@ int main(void){
     }
     if(cnt <= 1000) printf("%d", cnt);
     return 0;
+}
+
+void direction(int x, int y, int i, int n, bool checked){
+    int tmpX = 0;
+    int tmpY = 0;
+    switch (horse[i].top().second)
+    {
+    case 1: tmpX = x + 1; break;
+    case 2: tmpX = x - 1; break;
+    case 3: tmpY = y + 1; break;
+    case 4: tmpY = y - 1; break;
+    default: break;
+    }
+    printf("asdasd\n");
+    go(tmpX, tmpY, i, n, checked);
+    if(horseMap[tmpX][tmpY]){
+        stack<pair<pair<int, int>, int> > tmp;
+        while(!horse[horseMap[tmpX][tmpY]].empty()){
+            printf("top : %d\n", horse[i].top().second);
+            tmp.push(pair<pair<int, int>, int>(make_pair(tmpX, tmpX), horse[horseMap[tmpX][tmpY]].top().second));
+            horse[horseMap[tmpX][tmpY]].pop();
+        }
+        while(!tmp.empty()){
+            horse[i].push(pair<pair<int, int>, int>(make_pair(tmpX, tmpX), tmp.top().second));
+            tmp.pop();
+        }
+    }
+}
+
+void go(int x, int y, int i, int n, bool checked){
+    printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if(x < 0 || y < 0 || x >= n || y >= n || map[x][y] == 2){
+        if(checked) return;
+        int tmpD;
+        switch (horse[i].top().second){
+        case 1: tmpD = 2;
+        case 2: tmpD = 1;
+        case 3: tmpD = 4;
+        case 4: tmpD = 3;
+        default:
+            horse[i].pop();
+            horse[i].push(pair<pair<int, int>, int>(make_pair(x, y), tmpD));
+            direction(x, y, i, n, true);
+            break;
+        }
+    }else if(map[x][y] == 1){    
+        stack<pair<pair<int, int>, int> > tmp;
+        while(!horse[i].empty()){
+            tmp.push(pair<pair<int, int>, int>(make_pair(x, y), horse[i].top().second));
+            horse[i].pop();
+        }
+        horse[i] = tmp;
+    }else if(map[x][y] == 0){
+        horse[i].pop();
+        horse[i].push(pair<pair<int, int>, int>(make_pair(x, y), horse[i].top().second));
+    }
 }

@@ -15,7 +15,11 @@
   "files.associations": {
     "memory": "cpp",
     "utility": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "cstring": "cpp",
+    "stdexcept": "cpp",
+    "string": "cpp",
+    "vector": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "/usr/bin/clang",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/clang++",
